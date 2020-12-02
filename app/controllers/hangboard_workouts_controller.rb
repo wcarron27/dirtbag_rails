@@ -1,0 +1,2 @@
+class HangboardWorkoutsController < ApplicationController
+end
