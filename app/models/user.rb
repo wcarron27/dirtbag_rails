@@ -11,4 +11,8 @@ class User < ApplicationRecord
   def admin?
     self.admin == true
   end
+
+  def admin_or_owner?(object)
+    return self.admin == true || object.user_id == self.id
+  end
 end

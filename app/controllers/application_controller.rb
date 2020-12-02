@@ -45,11 +45,16 @@ class ApplicationController < ActionController::API
     !!admin_user
   end
 
+  def admin_or_owner?(object)
+    admin? || @user.admin_or_owner?(object)
+  end
+
   def authenticate_user
     render json: { message: 'Forbidden' }, status: :forbidden unless logged_in?
   end
 
-  def authorize_user
-    render json: { message: 'Unauthorized' }, status: :unauthorized unless admin?
+  def authorize_action(object)
+    render json: { message: 'Unauthorized' }, status: unauthorized unless admin_or_owner?(object)
   end
+
 end

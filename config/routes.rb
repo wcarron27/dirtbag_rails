@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   #
   resource :users, only: [:create]
   resources :bouldering_workouts
+  resources :climbing_workouts
+  resources :hangboard_workouts
 
   post "/login", to: "users#login"
   get "/auto-login", to: "users#auto_login"
