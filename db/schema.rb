@@ -10,16 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_25_191712) do
+ActiveRecord::Schema.define(version: 2020_12_02_004445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bouldering_workouts", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.bigint "user_id", null: false
+    t.string "location"
+    t.string "notes"
+    t.integer "quality_rating"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_bouldering_workouts_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "admin", default: 0
   end
 
+  add_foreign_key "bouldering_workouts", "users"
 end

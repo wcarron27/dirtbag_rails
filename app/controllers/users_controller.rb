@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorize_user, only: [:auto_login]
+  before_action :authenticate_user, only: [:auto_login]
 
   def create
     @user = User.create(create_params)

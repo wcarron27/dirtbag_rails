@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :authorize_user
+  before_action :authenticate_user
 
   def encode_token(payload)
     # TODO Replace with .env variable encoder
@@ -29,12 +29,27 @@ class ApplicationController < ActionController::API
       @user = User.find_by(id: user_id)
     end
   end
-  
+
+  def admin_user
+    if logged_in_user
+      user = User.find_by(id: @user.id)
+      admin = user.admin?
+    end
+  end
+
   def logged_in?
     !!logged_in_user
   end
 
+  def admin?
+    !!admin_user
+  end
+
+  def authenticate_user
+    render json: { message: 'Forbidden' }, status: :forbidden unless logged_in?
+  end
+
   def authorize_user
-    render json: { message: 'Unauthorized' }, status: :unauthorized unless logged_in?
+    render json: { message: 'Unauthorized' }, status: :unauthorized unless admin?
   end
 end

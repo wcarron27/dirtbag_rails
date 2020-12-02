@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2020-12-01 14:41:43
+  end_time: 2020-12-01 14:41:43
+  user: one
+  location: MyString
+  notes: MyString
+  quality_rating: 1
+
+two:
+  start_time: 2020-12-01 14:41:43
+  end_time: 2020-12-01 14:41:43
+  user: two
+  location: MyString
+  notes: MyString
+  quality_rating: 1
