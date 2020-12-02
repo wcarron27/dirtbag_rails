@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_02_183357) do
+ActiveRecord::Schema.define(version: 2020_12_02_221429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "boulder_problems", force: :cascade do |t|
+    t.bigint "bouldering_workout_id", null: false
+    t.integer "rpe"
+    t.integer "repetitions"
+    t.integer "sets"
+    t.integer "rest"
+    t.integer "difficulty"
+    t.string "notes"
+    t.boolean "sent"
+    t.boolean "clean"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bouldering_workout_id"], name: "index_boulder_problems_on_bouldering_workout_id"
+  end
 
   create_table "bouldering_workouts", force: :cascade do |t|
     t.datetime "start_time"
@@ -27,6 +42,21 @@ ActiveRecord::Schema.define(version: 2020_12_02_183357) do
     t.index ["user_id"], name: "index_bouldering_workouts_on_user_id"
   end
 
+  create_table "climbing_routes", force: :cascade do |t|
+    t.bigint "climbing_workout_id", null: false
+    t.integer "rpe"
+    t.integer "repetitions"
+    t.integer "sets"
+    t.integer "rest"
+    t.integer "difficulty"
+    t.string "notes"
+    t.boolean "sent"
+    t.boolean "clean"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["climbing_workout_id"], name: "index_climbing_routes_on_climbing_workout_id"
+  end
+
   create_table "climbing_workouts", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
@@ -36,6 +66,7 @@ ActiveRecord::Schema.define(version: 2020_12_02_183357) do
     t.integer "quality_rating"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "location"
     t.index ["user_id"], name: "index_climbing_workouts_on_user_id"
   end
 
@@ -63,7 +94,9 @@ ActiveRecord::Schema.define(version: 2020_12_02_183357) do
     t.date "birthday"
   end
 
+  add_foreign_key "boulder_problems", "bouldering_workouts"
   add_foreign_key "bouldering_workouts", "users"
+  add_foreign_key "climbing_routes", "climbing_workouts"
   add_foreign_key "climbing_workouts", "users"
   add_foreign_key "hangboard_workouts", "users"
 end
